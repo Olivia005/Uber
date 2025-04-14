@@ -6,6 +6,8 @@ const app = express();
 const cookieParser = require('cookie-parser'); // Import cookie parser middleware(server interacting with cookies)
 const connectToDb = require('./db/db'); // Import the database connection function
 const userRoutes = require('./routes/user.routes'); // Import user routes
+const captainRoutes = require('./routes/captain.routes'); // Import captain routes
+
 
 connectToDb(); 
 
@@ -18,5 +20,6 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 app.use('/users', userRoutes);
+app.use('/captains', captainRoutes); // Use captain routes
 
 module.exports = app;

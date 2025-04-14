@@ -107,3 +107,43 @@ requires a valid JWT token in the Authentication header or cookie
   "message": "Logged out successfully"
 }
 
+# /captain/register Endpoint
+
+## Request
+Method: POST  
+URL: /captain/register  
+
+### Body
+• email (string, required)  
+• fullname.firstname (string, required)  
+• fullname.lastname (string, optional)  
+• password (string, required)  
+• vehicle.color (string, required)  
+• vehicle.plate (string, required)  
+• vehicle.capacity (number, required)  
+• vehicle.vehicleType (string, required, one of: car, motorcycle, auto)
+
+## Response
+• 201: Returns newly created captain details  
+• 400: Returns validation errors  
+
+## Example Response
+{
+  "token": JWT token,
+  "_id": "captain_id",
+  "captain":{
+  "fullname": {
+    "firstname": User's first name,
+    "lastname": User's last name
+  },
+  "email": User's email,
+  "password": User's password,
+  "vehicle": {
+    "color": vehicle color,
+    "plate": vehicle number plate,
+    "capacity": vehicle capacity,
+    "vehicleType": "car"
+  }
+  }
+}
+
