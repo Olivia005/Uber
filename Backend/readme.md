@@ -107,7 +107,7 @@ requires a valid JWT token in the Authentication header or cookie
   "message": "Logged out successfully"
 }
 
-# /captain/register Endpoint
+# /captains/register Endpoint
 
 ## Request
 Method: POST  
@@ -123,27 +123,118 @@ URL: /captain/register
 • vehicle.capacity (number, required)  
 • vehicle.vehicleType (string, required, one of: car, motorcycle, auto)
 
+## Request Body
+```json
+{
+  "email": "captain@example.com", 
+  "fullname": {
+    "firstname": "Jane",          // required, min length 3
+    "lastname": "Doe"             // optional
+  },
+  "password": "secret123",        // required, min length 6
+  "vehicle": {
+    "color": "Black",             // required, min length 3
+    "plate": "ABC123",            // required, min length 3
+    "capacity": 4,                // required, integer
+    "vehicleType": "car"          // required, one of: car, motorcycle, auto
+  }
+}
+```
+
 ## Response
 • 201: Returns newly created captain details  
 • 400: Returns validation errors  
 
 ## Example Response
+```json
 {
-  "token": JWT token,
-  "_id": "captain_id",
-  "captain":{
-  "fullname": {
-    "firstname": User's first name,
-    "lastname": User's last name
-  },
-  "email": User's email,
-  "password": User's password,
-  "vehicle": {
-    "color": vehicle color,
-    "plate": vehicle number plate,
-    "capacity": vehicle capacity,
-    "vehicleType": "car"
-  }
+  "token": "some-jwt-token",      // JWT token
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "Jane",
+      "lastname": "Doe"
+    },
+    "email": "captain@example.com",
+    "vehicle": {
+      "color": "Black",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
   }
 }
+```
+
+# /captains/login Endpoint
+## Request
+Method: POST  
+URL: /captains/login  
+### Body
+• email  
+• password  
+## Response
+• 200: token + captain details  
+• 400: validation errors  
+• 401: invalid credentials  
+## Example Response
+```json
+{
+  "token": "captain-jwt-token",
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "Jane",
+      "lastname": "Doe"
+    },
+    "email": "captain@example.com"
+  }
+}
+```
+
+# /captains/profile Endpoint
+## Request
+Method: GET  
+URL: /captains/profile  
+## Description
+Retrieves current captain profile  
+## Response
+• 200: captain details  
+• 401: unauthorized  
+## Example Response
+```json
+{
+  "_id": "captain_id",
+  "fullname": {
+    "firstname": "Jane",
+    "lastname": "Doe"
+  },
+  "email": "captain@example.com",
+  "vehicle": {
+    "color": "Black",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+# /captains/logout Endpoint
+## Request
+Method: GET  
+URL: /captains/logout  
+## Description
+Logs out current captain
+## Response
+• 200: success message  
+• 401: unauthorized  
+## Example Response
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+
+
 
